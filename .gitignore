@@ -1,0 +1,13 @@
+@"
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.log
+"@ | Set-Content -Path .gitignore -Encoding utf8*.db
+*.db-wal
+*.db-shm
+*.db
+*.db-wal
+*.db-shm

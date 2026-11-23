@@ -1,0 +1,29 @@
+@page
+@* Exercício: 7 *@
+@model IndexModel
+@{
+	ViewData["Title"] = "Início";
+}
+
+<h1>Cidades</h1>
+
+@foreach (var city in Model.Cities)
+{
+	<div class="mb-4">
+		<h2><a asp-page="/CityDetails" asp-route-name="@city.Name">@city.Name</a></h2>
+		<p>País: @city.Country.CountryName</p>
+		@if (city.Properties.Count == 0)
+		{
+			<p>Nenhuma propriedade cadastrada.</p>
+		}
+		else
+		{
+			<ul>
+				@foreach (var property in city.Properties)
+				{
+					<li>@property.Name - @property.PricePerNight.ToString("C")</li>
+				}
+			</ul>
+		}
+	</div>
+}

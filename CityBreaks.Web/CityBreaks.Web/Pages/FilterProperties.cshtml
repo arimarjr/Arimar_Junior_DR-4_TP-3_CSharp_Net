@@ -1,0 +1,68 @@
+@page
+@* Exercício: 12 *@
+@model CityBreaks.Web.Pages.FilterPropertiesModel
+@{
+    ViewData["Title"] = "Filtrar propriedades";
+}
+
+<h1>Filtrar propriedades</h1>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <label asp-for="MinPrice" class="form-label">Preço mínimo</label>
+        <input asp-for="MinPrice" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label asp-for="MaxPrice" class="form-label">Preço máximo</label>
+        <input asp-for="MaxPrice" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label asp-for="CityName" class="form-label">Cidade</label>
+        <input asp-for="CityName" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label asp-for="PropertyName" class="form-label">Nome da propriedade</label>
+        <input asp-for="PropertyName" class="form-control" />
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+        <a asp-page="/FilterProperties">Limpar</a>
+    </div>
+</form>
+
+<h2>Filtros aplicados</h2>
+<ul>
+    <li>Preço mínimo: @(Model.MinPrice.HasValue ? Model.MinPrice.Value.ToString("C") : "nenhum")</li>
+    <li>Preço máximo: @(Model.MaxPrice.HasValue ? Model.MaxPrice.Value.ToString("C") : "nenhum")</li>
+    <li>Cidade: @(string.IsNullOrWhiteSpace(Model.CityName) ? "nenhum" : Model.CityName)</li>
+    <li>Nome da propriedade: @(string.IsNullOrWhiteSpace(Model.PropertyName) ? "nenhum" : Model.PropertyName)</li>
+</ul>
+
+@if (Model.Properties.Count == 0)
+{
+    <p>Nenhuma propriedade encontrada.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preço por noite</th>
+                <th>Cidade</th>
+                <th>País</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var property in Model.Properties)
+            {
+                <tr>
+                    <td>@property.Name</td>
+                    <td>@property.PricePerNight.ToString("C")</td>
+                    <td>@property.City.Name</td>
+                    <td>@property.City.Country.CountryName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

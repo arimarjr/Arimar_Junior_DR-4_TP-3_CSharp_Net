@@ -1,0 +1,44 @@
+@page "{name}"
+@* Exercício: 8, 10, 11 *@
+@model CityBreaks.Web.Pages.CityDetailsModel
+@{
+    ViewData["Title"] = Model.City.Name;
+}
+
+<h1>@Model.City.Name</h1>
+<p>País: @Model.City.Country.CountryName (@Model.City.Country.CountryCode)</p>
+
+<h2>Propriedades</h2>
+@if (Model.City.Properties.Count == 0)
+{
+    <p>Nenhuma propriedade cadastrada.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preço por noite</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var property in Model.City.Properties)
+            {
+                <tr>
+                    <td>@property.Name</td>
+                    <td>@property.PricePerNight.ToString("C")</td>
+                    <td>
+                        <a asp-page="/EditProperty" asp-route-id="@property.Id">Editar</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@property.Id" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-page="/Index">Voltar</a>
